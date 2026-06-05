@@ -46,6 +46,13 @@ This will:
 
 Full manifest: `repos.yaml`
 
+## Repository dependency model
+
+How sibling clones, framework submodules, and enterprise `baseline.yaml` pins fit together:
+
+- [Program repository dependency model](https://github.com/campbelldavidj72/aelaron-framework-governance/blob/development/docs/architecture/program-repository-dependency-model.md) (AEGF)
+- [Architecture types and repository ownership](https://github.com/campbelldavidj72/aelaron-framework-architecture/blob/development/docs/architecture/architecture-types-and-repos.md) (AAPF — discipline → repo map)
+
 ## Agent configuration
 
 | File | Purpose |
