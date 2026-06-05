@@ -5,7 +5,7 @@ set -euo pipefail
 
 V4="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ORG=campbelldavidj72
-AEGF_TAG=v1.0.8
+AEGF_TAG=v1.0.9
 MANIFEST="${V4}/repos.yaml"
 
 if [[ ! -f "$MANIFEST" ]]; then
