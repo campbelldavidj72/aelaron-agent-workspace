@@ -1,0 +1,5 @@
+.DS_Store
+.cursor/governance/sessions/
+
+# Child repositories are separate git checkouts — not part of this meta repo
+aelaron-*/

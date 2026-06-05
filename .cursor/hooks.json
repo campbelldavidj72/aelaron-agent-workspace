@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": ".cursor/hooks/aegf-session-start.sh"
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": ".cursor/hooks/aegf-pretooluse-task.sh",
+        "matcher": "Task"
+      }
+    ],
+    "afterShellExecution": [
+      {
+        "command": ".cursor/hooks/aegf-after-shell-report.sh",
+        "matcher": "governance-run-report"
+      }
+    ],
+    "sessionEnd": [
+      {
+        "command": ".cursor/hooks/aegf-session-end.sh"
+      }
+    ]
+  }
+}

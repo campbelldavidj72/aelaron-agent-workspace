@@ -1,0 +1,57 @@
+# Aelaron v4 program workspace — sibling repository manifest
+# Used by setup-v4-repos.sh; child repos are gitignored in this meta repo.
+
+organization: campbelldavidj72
+default_branch: development
+
+repositories:
+  - path: aelaron-framework-governance
+    role: governance
+    verification_profile: VP-GOV-01
+    validation: bash .github/scripts/governance-check.sh
+
+  - path: aelaron-framework-architecture
+    role: architecture
+    verification_profile: VP-ARCH-01
+    validation: bash .github/scripts/architecture-validation.sh
+    aegf_submodule: governance/aegf
+
+  - path: aelaron-framework-registry
+    role: domain
+    verification_profile: VP-DOM-01
+    validation: bash .github/scripts/domain-validation.sh
+    aegf_submodule: governance/aegf
+
+  - path: aelaron-framework-compliance
+    role: compliance
+    verification_profile: VP-CMP-01
+    validation: bash .github/scripts/compliance-validation.sh
+
+  - path: aelaron-framework-experience
+    role: experience
+    verification_profile: VP-EXP-01
+    validation: bash .github/scripts/experience-validation.sh
+
+  - path: aelaron-framework-security
+    role: security
+    verification_profile: VP-SEC-01
+    validation: bash .github/scripts/security-validation.sh
+
+  - path: aelaron-framework-user-interface
+    role: interface
+    verification_profile: VP-UI-01
+    validation: bash .github/scripts/user-interface-validation.sh
+
+  - path: aelaron-enterprise-application
+    role: application
+    verification_profile: VP-ENT-01
+    validation: bash .github/scripts/enterprise-application-validation.sh
+    aegf_submodule: governance/aegf
+
+  - path: aelaron-gateway-superstream
+    role: service
+    verification_profile: null
+
+  - path: aelaron-infrastructure
+    role: platform
+    verification_profile: null
