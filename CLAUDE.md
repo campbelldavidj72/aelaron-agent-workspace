@@ -1,4 +1,4 @@
-# CLAUDE.md — AEGF consumer template
+# CLAUDE.md — Aelaron v4 program workspace
 
 Claude Code reads this file at session start. **Do not duplicate AEGF policy here.**
 
@@ -8,20 +8,24 @@ Read and follow workspace **`AGENTS.md`** for all required behaviour, verificati
 
 ## AEGF baseline
 
-- Governance submodule: `governance/aegf` @ `<AEGF_VERSION>`
-- Agent approval: `governance/aegf/docs/agents/agent-approval-model.md`
-- Firing model: `governance/aegf/docs/metrics/governance-firing-model.md`
+- Governance sibling: `aelaron-framework-governance/` @ **v1.0.8**
+- Agent approval: `aelaron-framework-governance/docs/agents/agent-approval-model.md`
+- Firing model: `aelaron-framework-governance/docs/metrics/governance-firing-model.md`
 
-## End-of-run report (mandatory)
+## End-of-run report (PRs in child repos)
+
+Use the VP profile from the path table in `AGENTS.md` for the repository you changed:
 
 ```bash
-bash governance/aegf/.github/scripts/governance-run-report.sh \
+bash aelaron-framework-governance/.github/scripts/governance-run-report.sh \
   --run-type standard \
   --issue NNN \
-  --profile VP-GOV-01 \
+  --profile <VP-ID> \
   --fire INT-001,INT-002,INT-003,INT-004,INT-005,INT-006,EXE-001,EXE-002,EXE-003,EXE-004,EXE-005,BRN-001 \
-  --ci-pass governance-check \
+  --ci-pass <check-name> \
   --append-log governance/metrics/runs.jsonl
 ```
 
-Include the markdown output in your final message. See `governance/aegf/docs/agents/agent-instruction-layer.md` for Claude hook parity with Cursor.
+For meta-repo changes in this workspace root only, use `--profile VP-GOV-01` and `--ci-pass governance-check`.
+
+Include the markdown output in your final message. See `aelaron-framework-governance/docs/agents/agent-instruction-layer.md` for Claude hook parity with Cursor.
