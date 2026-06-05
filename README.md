@@ -30,20 +30,21 @@ This will:
 
 ## Repositories
 
-See `repos.yaml` for the full manifest. Sibling clones under this folder:
+`setup-v4-repos.sh` reads `repos.yaml` and clones every listed repository. Sibling clones:
 
-| Path | Role |
+| Frameworks | Applications & services |
 |---|---|
-| `aelaron-framework-governance/` | AEGF |
-| `aelaron-framework-architecture/` | AAPF |
-| `aelaron-framework-registry/` | Domain registry |
-| `aelaron-framework-compliance/` | ACRF |
-| `aelaron-framework-experience/` | AEXF |
-| `aelaron-framework-security/` | Security framework |
-| `aelaron-framework-user-interface/` | UI framework |
-| `aelaron-enterprise-application/` | Enterprise application consumer |
-| `aelaron-gateway-superstream/` | Service repo |
-| `aelaron-infrastructure/` | Platform repo |
+| `aelaron-framework-governance` | `aelaron-enterprise-application` |
+| `aelaron-framework-architecture` | `aelaron-registry` |
+| `aelaron-framework-registry` | `aelaron-agentic-platform` |
+| `aelaron-framework-compliance` | `aelaron-infrastructure` |
+| `aelaron-framework-experience` | `aelaron-developer-platform` |
+| `aelaron-framework-security` | `aelaron-gateway-superstream` |
+| `aelaron-framework-user-interface` | `aelaron-analytics` |
+| | `aelaron-member-online` |
+| | `aelaron-csr-console` |
+
+Full manifest: `repos.yaml`
 
 ## Agent configuration
 

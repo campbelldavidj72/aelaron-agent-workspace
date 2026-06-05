@@ -1,57 +1,103 @@
-# Aelaron v4 program workspace — sibling repository manifest
-# Used by setup-v4-repos.sh; child repos are gitignored in this meta repo.
+# Aelaron agent workspace — sibling repository manifest
+# Single source of truth for setup-v4-repos.sh
 
 organization: campbelldavidj72
 default_branch: development
 
+# install: governance_self | aegf_submodule | sibling_governance | enterprise | none
 repositories:
   - path: aelaron-framework-governance
     role: governance
+    clone_submodules: false
+    install: governance_self
     verification_profile: VP-GOV-01
-    validation: bash .github/scripts/governance-check.sh
+    validation: .github/scripts/governance-check.sh
 
   - path: aelaron-framework-architecture
     role: architecture
+    clone_submodules: true
+    install: aegf_submodule
     verification_profile: VP-ARCH-01
-    validation: bash .github/scripts/architecture-validation.sh
-    aegf_submodule: governance/aegf
+    validation: .github/scripts/architecture-validation.sh
 
   - path: aelaron-framework-registry
     role: domain
+    clone_submodules: true
+    install: aegf_submodule
     verification_profile: VP-DOM-01
-    validation: bash .github/scripts/domain-validation.sh
-    aegf_submodule: governance/aegf
+    validation: .github/scripts/domain-validation.sh
 
   - path: aelaron-framework-compliance
     role: compliance
+    clone_submodules: false
+    install: sibling_governance
     verification_profile: VP-CMP-01
-    validation: bash .github/scripts/compliance-validation.sh
+    validation: .github/scripts/compliance-validation.sh
 
   - path: aelaron-framework-experience
     role: experience
+    clone_submodules: false
+    install: sibling_governance
     verification_profile: VP-EXP-01
-    validation: bash .github/scripts/experience-validation.sh
+    validation: .github/scripts/experience-validation.sh
 
   - path: aelaron-framework-security
     role: security
+    clone_submodules: true
+    install: aegf_submodule
     verification_profile: VP-SEC-01
-    validation: bash .github/scripts/security-validation.sh
+    validation: .github/scripts/security-validation.sh
 
   - path: aelaron-framework-user-interface
     role: interface
+    clone_submodules: true
+    install: aegf_submodule
     verification_profile: VP-UI-01
-    validation: bash .github/scripts/user-interface-validation.sh
+    validation: .github/scripts/user-interface-validation.sh
 
   - path: aelaron-enterprise-application
     role: application
+    clone_submodules: true
+    install: enterprise
     verification_profile: VP-ENT-01
-    validation: bash .github/scripts/enterprise-application-validation.sh
-    aegf_submodule: governance/aegf
+    validation: .github/scripts/enterprise-application-validation.sh
 
-  - path: aelaron-gateway-superstream
-    role: service
-    verification_profile: null
+  - path: aelaron-registry
+    role: registry-service
+    clone_submodules: false
+    install: none
+
+  - path: aelaron-agentic-platform
+    role: platform
+    clone_submodules: false
+    install: none
 
   - path: aelaron-infrastructure
-    role: platform
-    verification_profile: null
+    role: infrastructure
+    clone_submodules: false
+    install: none
+
+  - path: aelaron-developer-platform
+    role: developer-platform
+    clone_submodules: false
+    install: none
+
+  - path: aelaron-gateway-superstream
+    role: gateway
+    clone_submodules: false
+    install: none
+
+  - path: aelaron-analytics
+    role: analytics
+    clone_submodules: false
+    install: none
+
+  - path: aelaron-member-online
+    role: member-online
+    clone_submodules: false
+    install: none
+
+  - path: aelaron-csr-console
+    role: csr-console
+    clone_submodules: false
+    install: none

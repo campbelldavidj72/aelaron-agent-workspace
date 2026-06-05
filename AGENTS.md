@@ -46,8 +46,14 @@ When editing files under a child folder, follow that repository's issue contract
 | `aelaron-framework-security/` | aelaron-framework-security | VP-SEC-01 |
 | `aelaron-framework-user-interface/` | aelaron-framework-user-interface | VP-UI-01 |
 | `aelaron-enterprise-application/` | aelaron-enterprise-application | VP-ENT-01 |
-| `aelaron-gateway-superstream/` | aelaron-gateway-superstream | per repo CI |
+| `aelaron-registry/` | aelaron-registry | per repo CI |
+| `aelaron-agentic-platform/` | aelaron-agentic-platform | per repo CI |
 | `aelaron-infrastructure/` | aelaron-infrastructure | per repo CI |
+| `aelaron-developer-platform/` | aelaron-developer-platform | per repo CI |
+| `aelaron-gateway-superstream/` | aelaron-gateway-superstream | per repo CI |
+| `aelaron-analytics/` | aelaron-analytics | per repo CI |
+| `aelaron-member-online/` | aelaron-member-online | per repo CI |
+| `aelaron-csr-console/` | aelaron-csr-console | per repo CI |
 
 Do not edit framework content inside `aelaron-enterprise-application/*/submodule/` trees in place — change the sibling clone, then bump pins in the enterprise application.
 
