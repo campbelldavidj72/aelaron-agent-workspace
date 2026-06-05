@@ -4,38 +4,51 @@ description: >-
   Produce or validate AEGF context packs for domain agents. Loads
   domain-agent-registry.yaml, context-pack-template.yaml, and issue ACL fields.
   Use when spawning domain agents, curating L0-L2 context, CTX-001/CTX-003,
-  or when the user mentions context pack, domain agent, or required_reading.
+  governed work, validate-context, or when the user mentions context pack.
 ---
 
 # AEGF context pack
 
 ## When to use
 
-- Parent spawns a **domain agent** (`explore`, E0–E1) before E2+ work
+- **Governed work** — any task impacting code, specifications, or baselines
+- Parent spawns a **domain agent** (`explore`, E0–E1) before E2+ worker work
 - Issue declares `target_repository`, `domain_agent_role`, `context_pack_l0`, `required_reading`
-- Attest **CTX-001** (pack on issue) or **CTX-003** (domain consulted before implementation)
 
 ## Steps
 
 1. Read issue contract: `allowed_paths`, `required_reading`, `domain_agent_role`, `target_repository`.
-2. Load registry entry from `aelaron-framework-governance/templates/domain-agent-registry.yaml` (key = `domain_agent_role`).
-3. Build tiers:
-   - **L0** — registry defaults or issue `context_pack_l0` (`AGENTS.md`, `MANIFEST.md`, `governance/baseline.yaml`)
-   - **L1** — VP doc + registry L1 paths
-   - **L2** — `required_reading` ∩ `allowed_paths` only
-   - **L3** — cross-repo pins from enterprise `governance/baseline.yaml` when needed
-4. Copy `templates/context-pack-template.yaml`; fill `framework_pins` from consumer baseline.
-5. List **excluded** paths with reasons (outside ACL, too broad).
-6. Output YAML or markdown table on the issue comment or worker spawn brief.
+2. Load registry entry from `aelaron-framework-governance/templates/domain-agent-registry.yaml`.
+3. Read L0 → L1 → L2 (ACL only); log thinking as you curate.
+4. Build context pack from `templates/context-pack-template.yaml`.
+5. **Validate context** before handoff (mandatory):
+
+```bash
+python3 aelaron-framework-governance/.github/scripts/agent-log.py think \
+  --agent-kind domain \
+  --domain-agent-role <role> \
+  --message "L2 limited to ACL; excluded install scripts"
+
+python3 aelaron-framework-governance/.github/scripts/agent-log.py validate-context \
+  --domain-agent-role <role> \
+  --target-repository <repo> \
+  --issue <N> \
+  --read AGENTS.md:L0 \
+  --read docs/standards/agent-verification-profiles.md:L1 \
+  --framework-pin aegf:v1.0.9 \
+  --clear-active
+```
+
+`validate-context` merges hook-tracked reads with explicit `--read` lines and records **framework_pins**.
 
 ## Rules
 
-- Domain agents **curate only** — no commits, no implementation (max envelope E1).
+- Domain agents **curate only** — no commits (max E1).
 - Never add L2 paths outside issue `allowed_paths`.
-- Do not instruct workers to load entire repositories.
+- Log **thinking** after each major curation decision (`agent-log.py think`).
 
 ## Related
 
 - `docs/agents/domain-agent-and-context-pack-model.md`
-- `docs/agents/context-pack-issue-convention.md`
-- `templates/agent-skills-catalog.yaml`
+- `docs/agents/agent-activity-log.md`
+- `.cursor/skills/aegf-agent-log/SKILL.md`

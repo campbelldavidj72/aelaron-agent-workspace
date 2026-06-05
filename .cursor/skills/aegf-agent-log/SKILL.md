@@ -1,10 +1,9 @@
 ---
 name: aegf-agent-log
 description: >-
-  Append timestamped activity to agent-log.jsonl at the workspace root — context
-  reads, freshness validation, domain/worker thinking, context packs. Use when
-  reading files for context, after pin bumps, when engaging subagents, or when
-  the user asks about agent activity logging.
+  Append timestamped activity to agent-log.jsonl — context validation, freshness,
+  domain/worker thinking, governed work. Use when reading files for context,
+  after pin bumps, validate-context, think, or monitoring agent activity.
 ---
 
 # AEGF agent activity log
@@ -13,40 +12,60 @@ description: >-
 
 `<workspace-root>/agent-log.jsonl` — append-only, gitignored.
 
-## When to use
+## Governed work
 
-- After **curating a context pack** (domain agent) — log `context_pack` with paths
-- After **confirming pins** post bump — log `freshness_validated` with `--pin-ref`
-- When **thinking** is not captured by hooks — log `agent_thinking` with `--thinking`
-- After **manual reads** outside hook coverage — log `context_read` with `--path` and `--context-tier`
+Any task that impacts **code, specifications, or baselines**:
 
-## Commands
+1. **Domain agent** curates context → `validate-context` → worker executes
+2. Both log **thinking** incrementally
+
+## Domain agent — context validation
+
+After reading L0/L1 (and before worker handoff):
 
 ```bash
-python3 aelaron-framework-governance/.github/scripts/agent-log.py append \
-  --event context_read \
+python3 aelaron-framework-governance/.github/scripts/agent-log.py validate-context \
+  --domain-agent-role governance \
+  --target-repository aelaron-framework-governance \
+  --issue 106 \
+  --read AGENTS.md:L0 \
+  --read templates/domain-agent-registry.yaml:L0 \
+  --framework-pin aegf:v1.0.9 \
+  --clear-active
+```
+
+Produces `context_validation` with `status` (`ok` | `incomplete` | `stale`), `reads[]`, and `framework_pins`.
+
+## Thinking (domain or worker)
+
+```bash
+python3 aelaron-framework-governance/.github/scripts/agent-log.py think \
   --agent-kind domain \
   --domain-agent-role governance \
-  --path AGENTS.md \
-  --context-tier L0 \
-  --pin-ref "$(git -C aelaron-framework-governance rev-parse --short HEAD)" \
-  --summary "L0 contract loaded"
+  --message "Excluded specs/events — outside allowed_paths"
+```
 
+Hooks also capture `agent_thinking` when `afterAgentThought` fires.
+
+## Worker — freshness
+
+```bash
 python3 aelaron-framework-governance/.github/scripts/agent-log.py append \
   --event freshness_validated \
   --agent-kind worker \
   --worker-agent-role engineer \
   --path governance/baseline.yaml \
   --pin-ref v1.0.9 \
-  --summary "Baseline pins match after submodule bump"
+  --summary "Pins confirmed before implementation"
 ```
 
-## Automatic hooks
+## Monitor
 
-Cursor hooks log `session_start`, `session_end`, `context_read`, `subagent_engaged`, `agent_thinking`, and `freshness_check` — see `docs/agents/agent-activity-log.md` in AEGF.
+```bash
+./tail-agent-log.sh
+```
 
-## Rules
+## Related
 
-- Domain and worker agents log major reasoning when hooks miss it
-- Re-read L0/L1 after `freshness_check` events; log `freshness_validated` when confirmed
-- Never delete or rewrite `agent-log.jsonl` — append only
+- `docs/agents/agent-activity-log.md`
+- `docs/agents/domain-agent-and-context-pack-model.md`

@@ -46,6 +46,17 @@ This will:
 
 Full manifest: `repos.yaml`
 
+## Agent activity log
+
+Monitor agent context reads, subagents, and freshness checks while you work:
+
+```bash
+./tail-agent-log.sh              # follow new entries
+./tail-agent-log.sh --from-start # replay then follow
+```
+
+Log file: `agent-log.jsonl` (gitignored). See `aelaron-framework-governance/docs/agents/agent-activity-log.md`.
+
 ## Repository dependency model
 
 How sibling clones, framework submodules, and enterprise `baseline.yaml` pins fit together:
