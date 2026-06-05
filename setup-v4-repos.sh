@@ -6,6 +6,8 @@ set -euo pipefail
 V4="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ORG=campbelldavidj72
 AEGF_TAG=v1.0.9
+# Agent-log hooks require AEGF development after v1.0.9 tag (644c1c2).
+AEGF_AGENT_LOG_MIN=a69885b
 MANIFEST="${V4}/repos.yaml"
 
 if [[ ! -f "$MANIFEST" ]]; then
@@ -81,14 +83,25 @@ patch_hooks_governance_sibling() {
   done
 }
 
+checkout_aegf_submodule() {
+  local root="$1"
+  [[ -e "$root/governance/aegf/.git" ]] || return 0
+  git -C "$root/governance/aegf" fetch origin development 2>/dev/null || true
+  if ! git -C "$root/governance/aegf" cat-file -e "$AEGF_AGENT_LOG_MIN" 2>/dev/null; then
+    git -C "$root/governance/aegf" fetch origin "$AEGF_AGENT_LOG_MIN" 2>/dev/null || true
+  fi
+  if git -C "$root/governance/aegf" cat-file -e "$AEGF_AGENT_LOG_MIN" 2>/dev/null \
+    && ! git -C "$root/governance/aegf" merge-base --is-ancestor "$AEGF_AGENT_LOG_MIN" HEAD 2>/dev/null; then
+    git -C "$root/governance/aegf" checkout "$AEGF_AGENT_LOG_MIN" 2>/dev/null \
+      || git -C "$root/governance/aegf" checkout development 2>/dev/null || true
+  fi
+}
+
 install_with_aegf_submodule() {
   local root="$1"
   cd "$root"
   git submodule update --init --recursive
-  if [[ -e governance/aegf/.git ]]; then
-    git -C governance/aegf fetch --tags origin 2>/dev/null || true
-    git -C governance/aegf checkout "$AEGF_TAG" 2>/dev/null || git -C governance/aegf checkout development 2>/dev/null || true
-  fi
+  checkout_aegf_submodule "$root"
   ln -sf governance/aegf aelaron-framework-governance
   if [[ -x governance/aegf/.github/scripts/install-v4-agent-instruction-layer.sh ]]; then
     bash governance/aegf/.github/scripts/install-v4-agent-instruction-layer.sh .
@@ -121,6 +134,7 @@ install_enterprise_application() {
   local root="$1"
   cd "$root"
   git submodule update --init --recursive
+  checkout_aegf_submodule "$root"
   ln -sf governance/aegf aelaron-framework-governance
   bash governance/aegf/.github/scripts/install-v4-agent-instruction-layer.sh .
   rm -f aelaron-framework-governance
