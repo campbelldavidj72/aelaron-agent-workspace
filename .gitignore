@@ -1,4 +1,5 @@
 .DS_Store
+agent-log.jsonl
 .cursor/governance/sessions/
 
 # Child repositories are separate git checkouts — not part of this meta repo

@@ -2,7 +2,14 @@
 # AEGF preToolUse: inject governance constraints into Cursor Task subagent prompts.
 set -euo pipefail
 
+ROOT="${CURSOR_PROJECT_DIR:-$(pwd)}"
+AEGF="${AEGF_REPO_ROOT:-$ROOT/aelaron-framework-governance}"
+export AEGF_WORKSPACE_ROOT="$ROOT"
+export AEGF_REPO_ROOT="$AEGF"
+
 read -r INPUT
+python3 "$AEGF/.github/scripts/agent-log.py" hook pretooluse-task <<<"$INPUT" 2>/dev/null || true
+
 python3 - "$INPUT" <<'PY'
 import json
 import os
