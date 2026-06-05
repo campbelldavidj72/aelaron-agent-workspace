@@ -1,5 +1,0 @@
-framework: AEGF
-version: 1.0.0
-source_repository: git@github.com:<org>/aelaron-framework-governance.git
-pinned_ref: v1.0.0
-overlay: application-overlay

@@ -1,71 +1,36 @@
 ---
 name: aegf-agent-log
 description: >-
-  Append timestamped activity to agent-log.jsonl — context validation, freshness,
-  domain/worker thinking, governed work. Use when reading files for context,
-  after pin bumps, validate-context, think, or monitoring agent activity.
+  Append structured events to agent-log.jsonl at L0 workspace root. Use during
+  domain curation, worker analysis, or when hooks request validate-context logging.
 ---
 
 # AEGF agent activity log
 
-## Log file
+## Location
 
-`<workspace-root>/agent-log.jsonl` — append-only, gitignored.
+Append-only **`agent-log.jsonl`** at L0 program workspace root.
 
-## Governed work
-
-Any task that impacts **code, specifications, or baselines**:
-
-1. **Domain agent** curates context → `validate-context` → worker executes
-2. Both log **thinking** incrementally
-
-## Domain agent — context validation
-
-After reading L0/L1 (and before worker handoff):
+## Common commands
 
 ```bash
+# Domain agent: after L0/L1 reads
 python3 aelaron-framework-governance/.github/scripts/agent-log.py validate-context \
-  --domain-agent-role governance \
-  --target-repository aelaron-framework-governance \
-  --issue 106 \
-  --read AGENTS.md:L0 \
-  --read templates/domain-agent-registry.yaml:L0 \
-  --framework-pin aegf:v1.0.9 \
-  --clear-active
-```
+  --domain-agent-role <role> --target-repository <repo> --issue <N> --clear-active
 
-Produces `context_validation` with `status` (`ok` | `incomplete` | `stale`), `reads[]`, and `framework_pins`.
-
-## Thinking (domain or worker)
-
-```bash
+# Thinking / decisions
 python3 aelaron-framework-governance/.github/scripts/agent-log.py think \
-  --agent-kind domain \
-  --domain-agent-role governance \
-  --message "Excluded specs/events — outside allowed_paths"
+  --agent-kind domain --domain-agent-role <role> --message "..."
+
+# Worker analysis
+python3 aelaron-framework-governance/.github/scripts/agent-log.py think \
+  --agent-kind worker --worker-agent-role engineer --message "..."
 ```
 
-Hooks also capture `agent_thinking` when `afterAgentThought` fires.
+## When to log
 
-## Worker — freshness
+- Domain agent: after validating context tiers; before handing pack to parent
+- Worker: major analysis decisions (not every tool call)
+- Optional for E0 quick lookups
 
-```bash
-python3 aelaron-framework-governance/.github/scripts/agent-log.py append \
-  --event freshness_validated \
-  --agent-kind worker \
-  --worker-agent-role engineer \
-  --path governance/baseline.yaml \
-  --pin-ref v1.0.9 \
-  --summary "Pins confirmed before implementation"
-```
-
-## Monitor
-
-```bash
-./tail-agent-log.sh
-```
-
-## Related
-
-- `docs/agents/agent-activity-log.md`
-- `docs/agents/domain-agent-and-context-pack-model.md`
+Schema: `aelaron-framework-governance/docs/agents/agent-activity-log.md`
