@@ -1,2 +1,4 @@
 sessions/
 session-audit.jsonl
+domain-active.json
+hook-trace.jsonl
