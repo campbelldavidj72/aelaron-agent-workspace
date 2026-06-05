@@ -2,14 +2,11 @@
 # AEGF agent-log: append hook events to workspace agent-log.jsonl (fire-and-forget).
 set -euo pipefail
 
-HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=aegf-env.sh
-source "$HOOK_DIR/aegf-env.sh"
-
 HOOK_TYPE="${1:?hook type required}"
 ROOT="${AEGF_WORKSPACE_ROOT:-${CURSOR_PROJECT_DIR:-$(pwd)}}"
-aegf_bootstrap_env "$ROOT"
-AEGF="$AEGF_REPO_ROOT"
+AEGF="${AEGF_REPO_ROOT:-$ROOT/governance/aegf}"
+export AEGF_WORKSPACE_ROOT="$ROOT"
+export AEGF_REPO_ROOT="$AEGF"
 
 TRACE_DIR="$ROOT/.cursor/governance"
 TRACE_FILE="$TRACE_DIR/hook-trace.jsonl"
@@ -61,8 +58,9 @@ else
   HOOK_EVENT="$(INPUT="$INPUT" python3 "$HOOK_JSON" hook_event_name 2>/dev/null || true)"
 
   stderr_file="$(mktemp "${TMPDIR:-/tmp}/aegf-agent-log.XXXXXX")"
+  NORMALIZED="$(INPUT="$INPUT" python3 "$HOOK_JSON")"
   set +e
-  python3 "$AEGF/.github/scripts/agent-log.py" hook "$HOOK_TYPE" <<<"$INPUT" 2>"$stderr_file"
+  python3 "$AEGF/.github/scripts/agent-log.py" hook "$HOOK_TYPE" <<<"$NORMALIZED" 2>"$stderr_file"
   rc=$?
   set -e
   if [[ "$rc" -ne 0 ]]; then

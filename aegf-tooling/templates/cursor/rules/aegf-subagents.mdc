@@ -1,0 +1,18 @@
+---
+description: AEGF constraints for Cursor Task subagents (explore, engineer, etc.)
+alwaysApply: true
+---
+
+# AEGF subagent governance
+
+All Task subagents inherit workspace **`AGENTS.md`** constraints.
+
+## Rules
+
+- Respect max envelope from `aelaron-framework-governance/templates/agent-role-catalog.yaml`
+- **E0** subagents: read/analyse only — no commits or merges
+- **E2–E3** subagents: edit only within parent issue allowed paths
+- Never merge to `main`
+- Implementation subagents must support parent run metrication (governance run report)
+
+Parent agent is responsible for linked issue, verification profile, and cumulative PR coverage.

@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Aelaron governance (AEGF)
 
-Read workspace `AGENTS.md` at task start. Instruction layer: `aelaron-platform-specifications/modules/governance/docs/agents/agent-instruction-layer.md`.
+Read workspace `AGENTS.md` at task start. Cross-tool mapping: `aelaron-framework-governance/docs/agents/agent-instruction-layer.md`.
 
 ## Non-negotiables
 
@@ -14,7 +14,7 @@ Read workspace `AGENTS.md` at task start. Instruction layer: `aelaron-platform-s
 - Declared verification profile with CI evidence in PR
 - Stay within issue envelope and allowed paths
 
-## Cursor hooks (L0 only — no stop enforcement)
+## Cursor hooks (no stop enforcement)
 
 - **sessionStart** — validates instruction layer and injects governance context
 - **preToolUse (Task)** — injects AEGF constraints into every subagent prompt
@@ -27,7 +27,7 @@ Read workspace `AGENTS.md` at task start. Instruction layer: `aelaron-platform-s
 For pull requests and release promotion, run from the repo you changed:
 
 ```bash
-bash aegf-tooling/.github/scripts/governance-run-report.sh \
+bash .github/scripts/governance-run-report.sh \
   --run-type standard \
   --issue <NNN> \
   --profile <VP-ID> \
@@ -36,10 +36,7 @@ bash aegf-tooling/.github/scripts/governance-run-report.sh \
   --append-log governance/metrics/runs.jsonl
 ```
 
-(When cwd is the program workspace root. From a child repo, use `../aegf-tooling/...` or sibling path.)
-
 Include output in the PR under **Governance coverage (cumulative)** (`--for-pr`). Local agent chats do not require a pasted end-of-turn report.
 
-Catalog: `aegf-tooling/templates/governance-firing-catalog.yaml`  
-Roles: `aegf-tooling/templates/agent-role-catalog.yaml`  
-Specifications (L1): `aelaron-platform-specifications/` pin `v2.0.0`
+Catalog: `aelaron-framework-governance/templates/governance-firing-catalog.yaml`
+Roles: `aelaron-framework-governance/templates/agent-role-catalog.yaml`
