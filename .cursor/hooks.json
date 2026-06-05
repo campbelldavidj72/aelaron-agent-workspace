@@ -15,46 +15,23 @@
       {
         "command": ".cursor/hooks/aegf-pretooluse-task.sh",
         "matcher": "Task"
-      },
-      {
-        "command": ".cursor/hooks/aegf-agent-log.sh context-read",
-        "matcher": "Read"
-      }
-    ],
-    "beforeReadFile": [
-      {
-        "command": ".cursor/hooks/aegf-agent-log.sh context-read"
       }
     ],
     "subagentStart": [
       {
-        "command": ".cursor/hooks/aegf-agent-log.sh subagent-start"
+        "command": ".cursor/hooks/aegf-subagent-start.sh"
       }
     ],
-    "afterAgentThought": [
+    "beforeShellExecution": [
       {
-        "command": ".cursor/hooks/aegf-agent-log.sh agent-thought"
-      }
-    ],
-    "postToolUse": [
-      {
-        "command": ".cursor/hooks/aegf-agent-log.sh post-tool-use",
-        "matcher": "Read|Write|Shell|Task|Grep|Glob|SemanticSearch"
-      }
-    ],
-    "afterFileEdit": [
-      {
-        "command": ".cursor/hooks/aegf-agent-log.sh after-file-edit"
+        "command": ".cursor/hooks/aegf-before-shell.sh",
+        "matcher": "git push --force|git push -f |git reset --hard|rm -rf "
       }
     ],
     "afterShellExecution": [
       {
         "command": ".cursor/hooks/aegf-after-shell-report.sh",
         "matcher": "governance-run-report"
-      },
-      {
-        "command": ".cursor/hooks/aegf-agent-log.sh shell-freshness",
-        "matcher": "git (submodule|pull)|setup-v4-repos|governance-check|baseline\\.yaml"
       }
     ]
   }

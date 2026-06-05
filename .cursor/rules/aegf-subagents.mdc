@@ -12,6 +12,7 @@ All Task subagents inherit workspace **`AGENTS.md`** constraints.
 - Respect max envelope from `aelaron-framework-governance/templates/agent-role-catalog.yaml`
 - **E0** subagents: read/analyse only — no commits or merges
 - **E2–E3** subagents: edit only within parent issue allowed paths
+- **Engineer** spawn requires **`## Context pack`** in Task prompt (hook-enforced)
 - Never merge to `main`
 - Implementation subagents must support parent run metrication (governance run report)
 

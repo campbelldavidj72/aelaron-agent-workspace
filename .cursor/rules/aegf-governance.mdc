@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Aelaron governance (AEGF)
 
-Read workspace `AGENTS.md` at task start. Instruction layer: `aelaron-platform-specifications/modules/governance/docs/agents/agent-instruction-layer.md`.
+Read workspace `AGENTS.md` at task start. Agent spec: `aelaron-framework-governance/docs/agents/agent-specification-model.md`.
 
 ## Non-negotiables
 
