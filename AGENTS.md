@@ -30,7 +30,8 @@ This folder is the **program workspace root** for local development across all A
 4. **Verification** — run the declared VP profile for the **repository you are changing**; paste evidence in that repo's PR.
 5. **Program development phase** — agents may merge tier 0–3 to `development` when rules pass.
 6. **Subagents** — inherit these rules; respect max envelope in role catalog.
-7. **Commit in the correct repo** — this meta repo tracks workspace config only (`AGENTS.md`, `setup-v4-repos.sh`, `.cursor/`). Framework and application commits happen in the child repository under the path you edited.
+7. **Activity log** — append timestamped events to **`agent-log.jsonl`** at this workspace root (hooks + `aelaron-framework-governance/.github/scripts/agent-log.py`). Log context reads, freshness after pin bumps, and domain/worker thinking. See `aelaron-framework-governance/docs/agents/agent-activity-log.md`.
+8. **Commit in the correct repo** — this meta repo tracks workspace config only (`AGENTS.md`, `setup-v4-repos.sh`, `.cursor/`). Framework and application commits happen in the child repository under the path you edited.
 
 ## Path → repository rules
 

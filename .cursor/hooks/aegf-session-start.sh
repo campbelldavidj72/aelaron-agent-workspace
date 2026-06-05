@@ -36,6 +36,8 @@ state = {
 Path(state_path).write_text(json.dumps(state, indent=2), encoding="utf-8")
 PY
 
+python3 "$AEGF/.github/scripts/agent-log.py" hook session-start <<<"$INPUT" 2>/dev/null || true
+
 python3 - "$CONTEXT" "$STATE_PATH" "$COMPOSER_MODE" <<'PY'
 import json, sys
 context, state_path, composer_mode = sys.argv[1:4]
