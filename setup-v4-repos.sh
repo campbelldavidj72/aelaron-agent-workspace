@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Clone, sync, and validate Aelaron v4 program repositories.
-# L0 agent hooks live only in this workspace (aegf-tooling/); child repos are not hook-installed.
+# L0 agent hooks live in this workspace; AEGF scripts live in aelaron-framework-governance sibling.
 # Repository list: repos.yaml
 set -euo pipefail
 
@@ -64,12 +64,12 @@ clone_repo() {
 }
 
 install_program_workspace() {
-  echo "=== L0 program workspace (aegf-tooling) ==="
-  if [[ -x "$V4/aegf-tooling/bin/sync-from-governance-sibling.sh" ]] \
-    && [[ -d "$V4/aelaron-framework-governance/.git" ]]; then
-    bash "$V4/aegf-tooling/bin/sync-from-governance-sibling.sh" || true
+  echo "=== L0 program workspace (AEGF from governance sibling) ==="
+  if [[ -x "$V4/aelaron-framework-governance/bin/install-program-workspace.sh" ]]; then
+    bash "$V4/aelaron-framework-governance/bin/install-program-workspace.sh" "$V4"
+  else
+    echo "  WARN: aelaron-framework-governance not cloned — skipping instruction layer install"
   fi
-  bash "$V4/aegf-tooling/bin/install-program-workspace.sh" "$V4"
 }
 
 echo "=== Clone missing repos (from repos.yaml) ==="
@@ -115,4 +115,4 @@ done < <(read_manifest validate)
 echo "=== DONE ==="
 echo "Open program workspace in Cursor: cursor $V4"
 echo "L1 specifications: aelaron-platform-specifications @ v2.0.0"
-echo "AEGF tooling: aegf-tooling/ (VERSION $(cat "$V4/aegf-tooling/VERSION" 2>/dev/null || echo '?'))"
+echo "AEGF tooling: aelaron-framework-governance/ (VERSION $(cat "$V4/aelaron-framework-governance/VERSION" 2>/dev/null || echo '?'))"

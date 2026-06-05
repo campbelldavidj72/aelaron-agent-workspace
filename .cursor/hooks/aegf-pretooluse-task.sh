@@ -39,7 +39,7 @@ tool_input = payload.get("tool_input") or {}
 subagent_type = tool_input.get("subagent_type") or tool_input.get("subagentType") or "generalPurpose"
 prompt = tool_input.get("prompt") or tool_input.get("task") or tool_input.get("description") or ""
 
-aegf = os.environ.get("AEGF_REPO_ROOT") or os.path.join(os.environ.get("AEGF_WORKSPACE_ROOT", "."), "aegf-tooling")
+aegf = os.environ.get("AEGF_REPO_ROOT") or os.path.join(os.environ.get("AEGF_WORKSPACE_ROOT", "."), "aelaron-framework-governance")
 suffix = __import__("subprocess").check_output(
     ["python3", f"{aegf}/.github/scripts/governance-instruction-context.py", "subagent-suffix", subagent_type],
     text=True,
