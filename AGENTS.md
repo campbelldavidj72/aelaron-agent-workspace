@@ -8,13 +8,13 @@ This folder is the **program workspace root** for local development across all A
 
 | Topic | Location |
 |---|---|
-| Governance baseline (AEGF) | `aelaron-framework-governance/` (pin: **v1.0.6** on `main`) |
-| Architecture baseline (AAPF) | `aelaron-framework-architecture/` (pin: **v1.2.2**) |
-| Domain registry | `aelaron-framework-registry/` (pin: **v1.1.0**) |
-| Compliance (ACRF) | `aelaron-framework-compliance/` (pin: **v1.0.0**) |
-| Experience (AEXF) | `aelaron-framework-experience/` (pin: **v1.0.0**) |
-| Security framework | `aelaron-framework-security/` |
-| User interface framework | `aelaron-framework-user-interface/` |
+| Governance baseline (AEGF) | `aelaron-framework-governance/` (pin: **v1.0.8** on `main`) |
+| Architecture baseline (AAPF) | `aelaron-framework-architecture/` (pin: **v1.2.4**) |
+| Domain registry | `aelaron-framework-registry/` (pin: **v1.4.2**) |
+| Compliance (ACRF) | `aelaron-framework-compliance/` (pin: **v1.0.1**) |
+| Experience (AEXF) | `aelaron-framework-experience/` (pin: **v1.0.1**) |
+| Security framework | `aelaron-framework-security/` (pin: **v1.2.0**) |
+| User interface framework | `aelaron-framework-user-interface/` (pin: **v1.2.0**) |
 | Enterprise application | `aelaron-enterprise-application/` (consumer + submodule pins) |
 | Work intake | `aelaron-framework-governance/docs/governance/20-work-intake-and-backlog-governance.md` |
 | Agent merge rules | `aelaron-framework-governance/docs/agents/agent-approval-model.md` |
@@ -44,7 +44,7 @@ When editing files under a child folder, follow that repository's issue contract
 | `aelaron-framework-compliance/` | aelaron-framework-compliance | VP-CMP-01 |
 | `aelaron-framework-experience/` | aelaron-framework-experience | VP-EXP-01 |
 | `aelaron-framework-security/` | aelaron-framework-security | VP-SEC-01 |
-| `aelaron-framework-user-interface/` | aelaron-framework-user-interface | VP-UI-01 |
+| `aelaron-framework-user-interface/` | aelaron-framework-user-interface | VP-UIF-01 |
 | `aelaron-enterprise-application/` | aelaron-enterprise-application | VP-ENT-01 |
 | `aelaron-registry/` | aelaron-registry | per repo CI |
 | `aelaron-agentic-platform/` | aelaron-agentic-platform | per repo CI |

@@ -29,15 +29,15 @@ repositories:
 
   - path: aelaron-framework-compliance
     role: compliance
-    clone_submodules: false
-    install: sibling_governance
+    clone_submodules: true
+    install: aegf_submodule
     verification_profile: VP-CMP-01
     validation: .github/scripts/compliance-validation.sh
 
   - path: aelaron-framework-experience
     role: experience
-    clone_submodules: false
-    install: sibling_governance
+    clone_submodules: true
+    install: aegf_submodule
     verification_profile: VP-EXP-01
     validation: .github/scripts/experience-validation.sh
 
@@ -52,7 +52,7 @@ repositories:
     role: interface
     clone_submodules: true
     install: aegf_submodule
-    verification_profile: VP-UI-01
+    verification_profile: VP-UIF-01
     validation: .github/scripts/user-interface-validation.sh
 
   - path: aelaron-enterprise-application
