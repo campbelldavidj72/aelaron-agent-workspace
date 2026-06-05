@@ -13,6 +13,13 @@ repositories:
     verification_profile: VP-GOV-01
     validation: .github/scripts/governance-check.sh
 
+  - path: aelaron-platform-specifications
+    role: specifications
+    clone_submodules: false
+    install: none
+    verification_profile: VP-SPEC-01
+    validation: .github/scripts/specifications-check.sh
+
   - path: aelaron-framework-architecture
     role: architecture
     clone_submodules: true

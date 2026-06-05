@@ -40,6 +40,7 @@ When editing files under a child folder, follow that repository's issue contract
 | Path prefix | GitHub repo | VP profile |
 |---|---|---|
 | `aelaron-framework-governance/` | aelaron-framework-governance | VP-GOV-01 |
+| `aelaron-platform-specifications/` | aelaron-platform-specifications | VP-SPEC-01 |
 | `aelaron-framework-architecture/` | aelaron-framework-architecture | VP-ARCH-01 |
 | `aelaron-framework-registry/` | aelaron-framework-registry | VP-DOM-01 |
 | `aelaron-framework-compliance/` | aelaron-framework-compliance | VP-CMP-01 |
