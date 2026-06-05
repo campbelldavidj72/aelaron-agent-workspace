@@ -8,7 +8,7 @@ This folder is the **program workspace root** for local development across all A
 
 | Topic | Location |
 |---|---|
-| Governance baseline (AEGF) | `aelaron-framework-governance/` (pin: **v1.0.8** on `main`) |
+| Governance baseline (AEGF) | `aelaron-framework-governance/` (pin: **v1.0.9** on `main`) |
 | Architecture baseline (AAPF) | `aelaron-framework-architecture/` (pin: **v1.2.4**) |
 | Domain registry | `aelaron-framework-registry/` (pin: **v1.4.2**) |
 | Compliance (ACRF) | `aelaron-framework-compliance/` (pin: **v1.0.1**) |
