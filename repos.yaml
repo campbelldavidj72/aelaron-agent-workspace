@@ -20,11 +20,11 @@ repositories:
     clone_submodules: false
     verification_profile: VP-GOV-01
     validation: .github/scripts/governance-check.sh
-    note: Source for aegf-tooling sync; policy specs in L1 modules/governance/
+    note: Source for aegf-tooling sync; policy specs live in L1 modules/governance/
 
   - path: aelaron-enterprise-application
     role: application
-    clone_submodules: true
+    clone_submodules: false
     verification_profile: VP-ENT-01
     validation: .github/scripts/enterprise-application-validation.sh
 
@@ -35,59 +35,13 @@ repositories:
   - path: aelaron-infrastructure
     role: infrastructure
     clone_submodules: false
+    note: No development branch yet; stays on repo default branch after clone
 
-  # Legacy L2 framework repos (superseded by aelaron-platform-specifications v2.0.0)
-  - path: aelaron-framework-architecture
-    role: legacy-framework
-    clone_submodules: false
-    validation: .github/scripts/architecture-validation.sh
-
-  - path: aelaron-framework-registry
-    role: legacy-framework
-    clone_submodules: false
-    validation: .github/scripts/domain-validation.sh
-
-  - path: aelaron-framework-compliance
-    role: legacy-framework
-    clone_submodules: false
-    validation: .github/scripts/compliance-validation.sh
-
-  - path: aelaron-framework-experience
-    role: legacy-framework
-    clone_submodules: false
-    validation: .github/scripts/experience-validation.sh
-
-  - path: aelaron-framework-security
-    role: legacy-framework
-    clone_submodules: false
-    validation: .github/scripts/security-validation.sh
-
-  - path: aelaron-framework-user-interface
-    role: legacy-framework
-    clone_submodules: false
-    validation: .github/scripts/user-interface-validation.sh
-
-  # Reserved L2 apps (clone when implemented)
-  - path: aelaron-registry
-    role: registry-service
-    clone_submodules: false
-
-  - path: aelaron-agentic-platform
-    role: platform
-    clone_submodules: false
-
-  - path: aelaron-developer-platform
-    role: developer-platform
-    clone_submodules: false
-
-  - path: aelaron-analytics
-    role: analytics
-    clone_submodules: false
-
-  - path: aelaron-member-online
-    role: member-online
-    clone_submodules: false
-
-  - path: aelaron-csr-console
-    role: csr-console
-    clone_submodules: false
+# Reserved L2 apps (not cloned by setup-v4-repos.sh until implemented):
+#   aelaron-registry, aelaron-agentic-platform, aelaron-developer-platform,
+#   aelaron-analytics, aelaron-member-online, aelaron-csr-console
+#
+# Superseded by L1 aelaron-platform-specifications @ v2.0.0 (do not clone locally):
+#   aelaron-framework-architecture, aelaron-framework-registry,
+#   aelaron-framework-compliance, aelaron-framework-experience,
+#   aelaron-framework-security, aelaron-framework-user-interface

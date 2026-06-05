@@ -12,15 +12,15 @@ This folder is the **L0 program workspace root**. Open it in Cursor for agent ho
 | **L1** | `aelaron-platform-specifications/` @ **`v2.0.0`** | Modular specs (domain, architecture, governance policy, trust, experience, interfaces) |
 | **L2** | Application sibling repos | Executable code (`aelaron-enterprise-application`, `aelaron-gateway-superstream`, …) |
 
-Legacy `aelaron-framework-*` repos are **superseded** by L1; kept in `repos.yaml` for transition only.
+Legacy `aelaron-framework-*` discipline repos are **superseded** by L1 and are not part of the default local workspace.
 
 ## Canonical sources
 
 | Topic | Location |
 |---|---|
-| Platform specifications | `aelaron-platform-specifications/` — see `baseline.yaml` |
-| AEGF tooling (scripts, catalogs) | `aegf-tooling/` (sync from `aelaron-framework-governance`) |
-| Enterprise application | `aelaron-enterprise-application/` (Phase D: will pin L1 tag only) |
+| Platform specifications | `aelaron-platform-specifications/` — tag `v2.0.0` |
+| AEGF tooling (scripts, catalogs) | `aegf-tooling/` at L0 — synced from `aelaron-framework-governance` when maintaining AEGF |
+| Enterprise application | `aelaron-enterprise-application/` — L1 pin in `governance/baseline.yaml` |
 | Work intake | `aelaron-platform-specifications/modules/governance/docs/governance/20-work-intake-and-backlog-governance.md` |
 | Agent roles & envelopes | `aegf-tooling/templates/agent-role-catalog.yaml` |
 | Program backlog | GitHub Project **Aelaron v4 Program** |
@@ -45,7 +45,6 @@ Legacy `aelaron-framework-*` repos are **superseded** by L1; kept in `repos.yaml
 | `aelaron-enterprise-application/` | aelaron-enterprise-application | VP-ENT-01 |
 | `aelaron-gateway-superstream/` | aelaron-gateway-superstream | per repo CI |
 | `aelaron-infrastructure/` | aelaron-infrastructure | per repo CI |
-| `aelaron-framework-*` | legacy (read-only transition) | per legacy script |
 
 Child repos opened standalone carry stub `AGENTS.md` pointing here — **do not** install hooks into child repos.
 
@@ -63,8 +62,8 @@ Validates L0 instruction layer via `aegf-tooling/bin/install-program-workspace.s
 |---|---|
 | A — L1 pilot (`modules/domain/`) | Done — tag `v1.0.0-migration` |
 | B — full L1 modules | Done — tag `v2.0.0` |
-| C — L0 `aegf-tooling/` | [AEGF #109](https://github.com/campbelldavidj72/aelaron-framework-governance/issues/109) |
-| D — L2 app pin + archive legacy | Planned |
+| C — L0 `aegf-tooling/` | Done — [AEGF #109](https://github.com/campbelldavidj72/aelaron-framework-governance/issues/109) |
+| D — L2 app pin + legacy archive | Done — [AEGF #110](https://github.com/campbelldavidj72/aelaron-framework-governance/issues/110) |
 
 ## End-of-run report (PRs in child repos)
 
