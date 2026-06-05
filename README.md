@@ -58,7 +58,7 @@ How sibling clones, framework submodules, and enterprise `baseline.yaml` pins fi
 | File | Purpose |
 |---|---|
 | `AGENTS.md` | Program-wide agent policy (Cursor workspace root) |
-| `.cursor/` | Cursor hooks → `aelaron-framework-governance/` |
+| `.cursor/` | Cursor hooks → `aelaron-framework-governance/`; project skills in `.cursor/skills/aegf-*` |
 | `CLAUDE.md` | Claude Code adapter |
 | `.github/copilot-instructions.md` | Copilot adapter |
 
