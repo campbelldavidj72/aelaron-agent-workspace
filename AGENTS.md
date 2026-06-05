@@ -1,6 +1,6 @@
 # AGENTS.md — Aelaron v4 program workspace
 
-This folder is the **program workspace root** for local development across all Aelaron v4 repositories. Open **`/Users/dc/src/Aelaron/v4`** (or your clone path) in Cursor as the workspace root.
+This folder is the **program workspace root** for local development across all Aelaron v4 repositories. Repository: `campbelldavidj72/aelaron-agent-workspace`. Open this folder in Cursor as the workspace root.
 
 > Tool-specific adapters: `aelaron-framework-governance/docs/agents/agent-instruction-layer.md`
 

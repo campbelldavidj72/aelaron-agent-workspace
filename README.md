@@ -1,18 +1,24 @@
-# Aelaron v4 program workspace
+# Aelaron agent workspace
 
-Local **meta repository** for agent configuration and multi-repo setup. Child frameworks and applications live as **sibling git clones** in this folder.
+GitHub: [campbelldavidj72/aelaron-agent-workspace](https://github.com/campbelldavidj72/aelaron-agent-workspace)
 
-**Open this folder in Cursor** as your workspace root:
+Meta repository for **agent configuration** and multi-repo local setup. Child frameworks and applications are **sibling git clones** in this folder (not tracked by this repo).
+
+## Clone
 
 ```bash
-cursor /Users/dc/src/Aelaron/v4
+git clone git@github.com:campbelldavidj72/aelaron-agent-workspace.git aelaron-agent-workspace
+cd aelaron-agent-workspace
+bash setup-v4-repos.sh
+cursor .
 ```
 
-## First-time setup
+## First-time setup (existing checkout)
 
 ```bash
-cd /Users/dc/src/Aelaron/v4
+cd /path/to/aelaron-agent-workspace
 bash setup-v4-repos.sh
+cursor .
 ```
 
 This will:
