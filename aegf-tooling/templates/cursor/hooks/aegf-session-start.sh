@@ -2,13 +2,10 @@
 # AEGF sessionStart: validate instruction layer and inject governance context.
 set -euo pipefail
 
-HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=aegf-env.sh
-source "$HOOK_DIR/aegf-env.sh"
-
 ROOT="${CURSOR_PROJECT_DIR:-$(pwd)}"
-aegf_bootstrap_env "$ROOT"
-AEGF="$AEGF_REPO_ROOT"
+AEGF="${ROOT}/aelaron-framework-governance"
+export AEGF_WORKSPACE_ROOT="$ROOT"
+export AEGF_REPO_ROOT="$AEGF"
 
 TRACE_DIR="$ROOT/.cursor/governance"
 TRACE_FILE="$TRACE_DIR/hook-trace.jsonl"
@@ -45,6 +42,7 @@ if [[ ! -f "$AEGF/.github/scripts/governance-instruction-context.py" ]]; then
   exit 0
 fi
 
+
 VALIDATION="$(python3 "$AEGF/.github/scripts/governance-instruction-context.py" validate-json)"
 CONTEXT="$(python3 "$AEGF/.github/scripts/governance-instruction-context.py" context-md cursor)"
 
@@ -67,12 +65,15 @@ Path(state_path).write_text(json.dumps(state, indent=2), encoding="utf-8")
 PY
 
 stderr_file="$(mktemp "${TMPDIR:-/tmp}/aegf-session-start.XXXXXX")"
+NORMALIZED="$(INPUT="$INPUT" python3 "$HOOK_JSON")"
 set +e
-python3 "$AEGF/.github/scripts/agent-log.py" hook session-start <<<"$INPUT" 2>"$stderr_file"
+python3 "$AEGF/.github/scripts/agent-log.py" hook session-start <<<"$NORMALIZED" 2>"$stderr_file"
 rc=$?
 set -e
 if [[ "$rc" -ne 0 ]] || [[ -s "$stderr_file" ]]; then
   log_hook_trace "session_start_agent_log_failed" "$(cat "$stderr_file")"
+else
+  log_hook_trace "session_start_ok" "session_id=${SESSION_ID} logged to agent-log.jsonl"
 fi
 rm -f "$stderr_file"
 

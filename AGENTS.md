@@ -1,24 +1,28 @@
 # AGENTS.md — Aelaron v4 program workspace
 
-This folder is the **program workspace root** for local development across all Aelaron v4 repositories. Repository: `campbelldavidj72/aelaron-agent-workspace`. Open this folder in Cursor as the workspace root.
+This folder is the **L0 program workspace root**. Open it in Cursor for agent hooks, skills, and AEGF tooling. Repository: `campbelldavidj72/aelaron-agent-workspace`.
 
-> Tool-specific adapters: `aelaron-framework-governance/docs/agents/agent-instruction-layer.md`
+> Tool-specific adapters: `aelaron-platform-specifications/modules/governance/docs/agents/agent-instruction-layer.md`
+
+## Three-layer model
+
+| Layer | Location | Purpose |
+|---|---|---|
+| **L0** | This workspace | `AGENTS.md`, `.cursor/hooks`, `aegf-tooling/`, `agent-log.jsonl` |
+| **L1** | `aelaron-platform-specifications/` @ **`v2.0.0`** | Modular specs (domain, architecture, governance policy, trust, experience, interfaces) |
+| **L2** | Application sibling repos | Executable code (`aelaron-enterprise-application`, `aelaron-gateway-superstream`, …) |
+
+Legacy `aelaron-framework-*` repos are **superseded** by L1; kept in `repos.yaml` for transition only.
 
 ## Canonical sources
 
 | Topic | Location |
 |---|---|
-| Governance baseline (AEGF) | `aelaron-framework-governance/` (pin: **v1.0.9** on `main`) |
-| Architecture baseline (AAPF) | `aelaron-framework-architecture/` (pin: **v1.2.4**) |
-| Domain registry | `aelaron-framework-registry/` (pin: **v1.4.2**) |
-| Compliance (ACRF) | `aelaron-framework-compliance/` (pin: **v1.0.1**) |
-| Experience (AEXF) | `aelaron-framework-experience/` (pin: **v1.0.1**) |
-| Security framework | `aelaron-framework-security/` (pin: **v1.2.0**) |
-| User interface framework | `aelaron-framework-user-interface/` (pin: **v1.2.0**) |
-| Enterprise application | `aelaron-enterprise-application/` (consumer + submodule pins) |
-| Work intake | `aelaron-framework-governance/docs/governance/20-work-intake-and-backlog-governance.md` |
-| Agent merge rules | `aelaron-framework-governance/docs/agents/agent-approval-model.md` |
-| Agent roles & envelopes | `aelaron-framework-governance/templates/agent-role-catalog.yaml` |
+| Platform specifications | `aelaron-platform-specifications/` — see `baseline.yaml` |
+| AEGF tooling (scripts, catalogs) | `aegf-tooling/` (sync from `aelaron-framework-governance`) |
+| Enterprise application | `aelaron-enterprise-application/` (Phase D: will pin L1 tag only) |
+| Work intake | `aelaron-platform-specifications/modules/governance/docs/governance/20-work-intake-and-backlog-governance.md` |
+| Agent roles & envelopes | `aegf-tooling/templates/agent-role-catalog.yaml` |
 | Program backlog | GitHub Project **Aelaron v4 Program** |
 | Repo manifest | `repos.yaml` |
 
@@ -28,60 +32,44 @@ This folder is the **program workspace root** for local development across all A
 2. **Branch** — PRs target `development`; never merge to `main` (human only).
 3. **Envelope** — stay within issue allowed paths and scope envelope (E0–E4).
 4. **Verification** — run the declared VP profile for the **repository you are changing**; paste evidence in that repo's PR.
-5. **Program development phase** — agents may merge tier 0–3 to `development` when rules pass.
-6. **Subagents** — inherit these rules; respect max envelope in role catalog.
-7. **Activity log** — append timestamped events to **`agent-log.jsonl`** at this workspace root (hooks + `aelaron-framework-governance/.github/scripts/agent-log.py`). Log context reads, freshness after pin bumps, and domain/worker thinking. See `aelaron-framework-governance/docs/agents/agent-activity-log.md`.
-8. **Commit in the correct repo** — this meta repo tracks workspace config only (`AGENTS.md`, `setup-v4-repos.sh`, `.cursor/`). Framework and application commits happen in the child repository under the path you edited.
+5. **Subagents** — inherit these rules; respect max envelope in role catalog.
+6. **Activity log** — append to **`agent-log.jsonl`** (hooks + `aegf-tooling/.github/scripts/agent-log.py`).
+7. **Commit in the correct repo** — this meta repo tracks L0 config (`aegf-tooling/`, `.cursor/`, `setup-v4-repos.sh`). Spec edits → `aelaron-platform-specifications`. Code → L2 app repos.
 
 ## Path → repository rules
 
-When editing files under a child folder, follow that repository's issue contract and verification profile:
-
 | Path prefix | GitHub repo | VP profile |
 |---|---|---|
-| `aelaron-framework-governance/` | aelaron-framework-governance | VP-GOV-01 |
-| `aelaron-framework-architecture/` | aelaron-framework-architecture | VP-ARCH-01 |
-| `aelaron-framework-registry/` | aelaron-framework-registry | VP-DOM-01 |
-| `aelaron-framework-compliance/` | aelaron-framework-compliance | VP-CMP-01 |
-| `aelaron-framework-experience/` | aelaron-framework-experience | VP-EXP-01 |
-| `aelaron-framework-security/` | aelaron-framework-security | VP-SEC-01 |
-| `aelaron-framework-user-interface/` | aelaron-framework-user-interface | VP-UIF-01 |
+| `aegf-tooling/` | aelaron-agent-workspace | VP-GOV-01 |
+| `aelaron-platform-specifications/` | aelaron-platform-specifications | VP-SPEC-01 |
 | `aelaron-enterprise-application/` | aelaron-enterprise-application | VP-ENT-01 |
-| `aelaron-registry/` | aelaron-registry | per repo CI |
-| `aelaron-agentic-platform/` | aelaron-agentic-platform | per repo CI |
-| `aelaron-infrastructure/` | aelaron-infrastructure | per repo CI |
-| `aelaron-developer-platform/` | aelaron-developer-platform | per repo CI |
 | `aelaron-gateway-superstream/` | aelaron-gateway-superstream | per repo CI |
-| `aelaron-analytics/` | aelaron-analytics | per repo CI |
-| `aelaron-member-online/` | aelaron-member-online | per repo CI |
-| `aelaron-csr-console/` | aelaron-csr-console | per repo CI |
+| `aelaron-infrastructure/` | aelaron-infrastructure | per repo CI |
+| `aelaron-framework-*` | legacy (read-only transition) | per legacy script |
 
-Do not edit framework content inside `aelaron-enterprise-application/*/submodule/` trees in place — change the sibling clone, then bump pins in the enterprise application.
+Child repos opened standalone carry stub `AGENTS.md` pointing here — **do not** install hooks into child repos.
 
-## Submodule mount names (enterprise app only)
-
-Inside `aelaron-enterprise-application/`, short paths are intentional: `governance/aegf`, `architecture/aapf`, etc. Those are not separate repos.
-
-## Instruction layer
-
-Install or refresh for this workspace root and all child repos:
+## Setup
 
 ```bash
 bash setup-v4-repos.sh
 ```
 
-Verify this root only:
+Validates L0 instruction layer via `aegf-tooling/bin/install-program-workspace.sh`.
 
-```bash
-bash aelaron-framework-governance/.github/scripts/governance-instruction-layer-check.sh .
-```
+## Migration program
+
+| Phase | Status |
+|---|---|
+| A — L1 pilot (`modules/domain/`) | Done — tag `v1.0.0-migration` |
+| B — full L1 modules | Done — tag `v2.0.0` |
+| C — L0 `aegf-tooling/` | [AEGF #109](https://github.com/campbelldavidj72/aelaron-framework-governance/issues/109) |
+| D — L2 app pin + archive legacy | Planned |
 
 ## End-of-run report (PRs in child repos)
 
-Run from the repository you changed, using AEGF from the sibling governance clone:
-
 ```bash
-bash ../aelaron-framework-governance/.github/scripts/governance-run-report.sh \
+bash aegf-tooling/.github/scripts/governance-run-report.sh \
   --run-type standard \
   --issue NNN \
   --profile <VP-ID> \
@@ -90,4 +78,4 @@ bash ../aelaron-framework-governance/.github/scripts/governance-run-report.sh \
   --append-log governance/metrics/runs.jsonl
 ```
 
-(Adjust `../aelaron-framework-governance` if your cwd is not a direct sibling.)
+(Run from program workspace root, or adjust path to `aegf-tooling/`.)

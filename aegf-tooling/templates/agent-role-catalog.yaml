@@ -1,0 +1,216 @@
+# Agent role catalog — maps tool agents to AEGF envelopes and metrication policy
+version: 1
+
+# Portable tools (primary agent surfaces)
+tools:
+  cursor:
+    label: Cursor Agent / Composer
+    instruction_files:
+      - AGENTS.md
+      - .cursor/rules/aegf-governance.mdc
+      - .cursor/hooks.json
+    hooks:
+      - sessionStart
+      - preToolUse
+      - afterShellExecution
+      - sessionEnd
+    firing_report: required
+
+  claude_code:
+    label: Claude Code CLI
+    instruction_files:
+      - AGENTS.md
+      - CLAUDE.md
+      - .claude/settings.json
+    hooks:
+      - SessionStart
+      - Stop
+    firing_report: required
+
+  github_copilot:
+    label: GitHub Copilot (IDE / coding agent)
+    instruction_files:
+      - AGENTS.md
+      - .github/copilot-instructions.md
+    firing_report: required
+
+  openai_codex:
+    label: OpenAI Codex / CLI agents
+    instruction_files:
+      - AGENTS.md
+    firing_report: required
+
+  cursor_cloud:
+    label: Cursor cloud agents
+    instruction_files:
+      - AGENTS.md
+      - .cursor/hooks.json
+    hooks:
+      - afterShellExecution
+      - preToolUse
+    firing_report: required
+    notes: sessionStart/stop not wired in cloud; rely on AGENTS.md + CI
+
+# Cursor Task subagents (must inherit AGENTS.md constraints via preToolUse injection)
+cursor_subagents:
+  explore:
+    role: discovery
+    max_envelope: E0
+    firing_report: never
+
+  cursor-guide:
+    role: documentation
+    max_envelope: E0
+    firing_report: never
+
+  ci-investigator:
+    role: ci-analysis
+    max_envelope: E0
+    firing_report: never
+
+  generalPurpose:
+    role: general-implementation
+    max_envelope: E3
+    firing_report: required_if_modified
+
+  engineer:
+    role: implementation
+    max_envelope: E3
+    firing_report: required_if_modified
+
+  shell:
+    role: command-execution
+    max_envelope: E2
+    firing_report: required_if_modified
+
+  best-of-n-runner:
+    role: isolated-experiment
+    max_envelope: E3
+    firing_report: required_if_modified
+
+  enterprise-architect:
+    role: architecture-advisory
+    max_envelope: E0
+    firing_report: advisory
+
+  infosec-specialist:
+    role: security-review
+    max_envelope: E0
+    firing_report: advisory
+
+  member-ops-specialist:
+    role: member-operations
+    max_envelope: E0
+    firing_report: advisory
+
+  platform-manager:
+    role: platform-operations
+    max_envelope: E1
+    firing_report: advisory
+
+  product-manager:
+    role: product-discovery
+    max_envelope: E0
+    firing_report: advisory
+
+  program-manager:
+    role: program-backlog-management
+    max_envelope: E2
+    firing_report: required
+    notes: GitHub Issues and Project Status; consumer progress YAML; no production code merge without linked implementer issue
+
+  product-marketing:
+    role: product-messaging
+    max_envelope: E0
+    firing_report: advisory
+
+  quality-engineer:
+    role: quality-assurance
+    max_envelope: E2
+    firing_report: required_if_modified
+
+  risk-manager-line1:
+    role: risk-assessment
+    max_envelope: E0
+    firing_report: advisory
+
+  ux-designer:
+    role: user-experience
+    max_envelope: E1
+    firing_report: advisory
+
+  capital-raising-advisor:
+    role: commercial-advisory
+    max_envelope: E0
+    firing_report: never
+
+# Logical worker roles — map to cursor_subagents for orchestration (see domain-agent-and-context-pack-model.md)
+worker_agents:
+  program-manager:
+    cursor_subagent: program-manager
+    role: program-backlog-management
+    max_envelope: E2
+    context_required: true
+
+  product-manager:
+    cursor_subagent: product-manager
+    role: product-discovery
+    max_envelope: E0
+    context_required: true
+
+  enterprise-architect:
+    cursor_subagent: enterprise-architect
+    role: architecture-advisory
+    max_envelope: E0
+    context_required: true
+
+  engineer:
+    cursor_subagent: engineer
+    role: implementation
+    max_envelope: E3
+    context_required: true
+    requires_domain_pack: true
+
+  quality-engineer:
+    cursor_subagent: quality-engineer
+    role: quality-assurance
+    max_envelope: E2
+    context_required: true
+
+  ux-designer:
+    cursor_subagent: ux-designer
+    role: user-experience
+    max_envelope: E1
+    context_required: true
+
+  compliance-manager:
+    cursor_subagent: explore
+    role: compliance-advisory
+    max_envelope: E0
+    context_required: true
+    domain_agent_role: compliance
+    notes: Pair with compliance domain agent context pack; read-only advisory
+
+  risk-manager-line1:
+    cursor_subagent: risk-manager-line1
+    role: risk-assessment
+    max_envelope: E0
+    context_required: true
+
+  infosec-specialist:
+    cursor_subagent: infosec-specialist
+    role: security-review
+    max_envelope: E0
+    context_required: true
+    notes: CISO-equivalent security review; separate session from engineer for tier 2+
+
+# Domain curator profiles — instantiate via explore subagent + templates/domain-agent-registry.yaml
+domain_agent_policy:
+  curator_subagent: explore
+  max_envelope: E1
+  firing_report: advisory
+  produces: context_pack
+  registry: templates/domain-agent-registry.yaml
+  skills_catalog: templates/agent-skills-catalog.yaml
+
+skills_catalog: templates/agent-skills-catalog.yaml

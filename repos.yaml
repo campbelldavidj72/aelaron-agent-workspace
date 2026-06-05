@@ -1,103 +1,93 @@
 # Aelaron agent workspace — sibling repository manifest
 # Single source of truth for setup-v4-repos.sh
+#
+# L0: this workspace (hooks + aegf-tooling/)
+# L1: aelaron-platform-specifications
+# L2: application repos
 
 organization: campbelldavidj72
 default_branch: development
 
-# install: governance_self | aegf_submodule | sibling_governance | enterprise | none
 repositories:
-  - path: aelaron-framework-governance
-    role: governance
+  - path: aelaron-platform-specifications
+    role: specifications
     clone_submodules: false
-    install: governance_self
+    verification_profile: VP-SPEC-01
+    validation: .github/scripts/specifications-check.sh
+
+  - path: aelaron-framework-governance
+    role: governance-source
+    clone_submodules: false
     verification_profile: VP-GOV-01
     validation: .github/scripts/governance-check.sh
-
-  - path: aelaron-framework-architecture
-    role: architecture
-    clone_submodules: true
-    install: aegf_submodule
-    verification_profile: VP-ARCH-01
-    validation: .github/scripts/architecture-validation.sh
-
-  - path: aelaron-framework-registry
-    role: domain
-    clone_submodules: true
-    install: aegf_submodule
-    verification_profile: VP-DOM-01
-    validation: .github/scripts/domain-validation.sh
-
-  - path: aelaron-framework-compliance
-    role: compliance
-    clone_submodules: true
-    install: aegf_submodule
-    verification_profile: VP-CMP-01
-    validation: .github/scripts/compliance-validation.sh
-
-  - path: aelaron-framework-experience
-    role: experience
-    clone_submodules: true
-    install: aegf_submodule
-    verification_profile: VP-EXP-01
-    validation: .github/scripts/experience-validation.sh
-
-  - path: aelaron-framework-security
-    role: security
-    clone_submodules: true
-    install: aegf_submodule
-    verification_profile: VP-SEC-01
-    validation: .github/scripts/security-validation.sh
-
-  - path: aelaron-framework-user-interface
-    role: interface
-    clone_submodules: true
-    install: aegf_submodule
-    verification_profile: VP-UIF-01
-    validation: .github/scripts/user-interface-validation.sh
+    note: Source for aegf-tooling sync; policy specs in L1 modules/governance/
 
   - path: aelaron-enterprise-application
     role: application
     clone_submodules: true
-    install: enterprise
     verification_profile: VP-ENT-01
     validation: .github/scripts/enterprise-application-validation.sh
-
-  - path: aelaron-registry
-    role: registry-service
-    clone_submodules: false
-    install: none
-
-  - path: aelaron-agentic-platform
-    role: platform
-    clone_submodules: false
-    install: none
-
-  - path: aelaron-infrastructure
-    role: infrastructure
-    clone_submodules: false
-    install: none
-
-  - path: aelaron-developer-platform
-    role: developer-platform
-    clone_submodules: false
-    install: none
 
   - path: aelaron-gateway-superstream
     role: gateway
     clone_submodules: false
-    install: none
+
+  - path: aelaron-infrastructure
+    role: infrastructure
+    clone_submodules: false
+
+  # Legacy L2 framework repos (superseded by aelaron-platform-specifications v2.0.0)
+  - path: aelaron-framework-architecture
+    role: legacy-framework
+    clone_submodules: false
+    validation: .github/scripts/architecture-validation.sh
+
+  - path: aelaron-framework-registry
+    role: legacy-framework
+    clone_submodules: false
+    validation: .github/scripts/domain-validation.sh
+
+  - path: aelaron-framework-compliance
+    role: legacy-framework
+    clone_submodules: false
+    validation: .github/scripts/compliance-validation.sh
+
+  - path: aelaron-framework-experience
+    role: legacy-framework
+    clone_submodules: false
+    validation: .github/scripts/experience-validation.sh
+
+  - path: aelaron-framework-security
+    role: legacy-framework
+    clone_submodules: false
+    validation: .github/scripts/security-validation.sh
+
+  - path: aelaron-framework-user-interface
+    role: legacy-framework
+    clone_submodules: false
+    validation: .github/scripts/user-interface-validation.sh
+
+  # Reserved L2 apps (clone when implemented)
+  - path: aelaron-registry
+    role: registry-service
+    clone_submodules: false
+
+  - path: aelaron-agentic-platform
+    role: platform
+    clone_submodules: false
+
+  - path: aelaron-developer-platform
+    role: developer-platform
+    clone_submodules: false
 
   - path: aelaron-analytics
     role: analytics
     clone_submodules: false
-    install: none
 
   - path: aelaron-member-online
     role: member-online
     clone_submodules: false
-    install: none
 
   - path: aelaron-csr-console
     role: csr-console
     clone_submodules: false
-    install: none
