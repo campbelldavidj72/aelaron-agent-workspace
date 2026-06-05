@@ -9,5 +9,16 @@ export AEGF_WORKSPACE_ROOT="$ROOT"
 export AEGF_REPO_ROOT="$AEGF"
 
 read -r INPUT || INPUT="{}"
-python3 "$AEGF/.github/scripts/agent-log.py" hook "$HOOK_TYPE" <<<"$INPUT" || true
-echo "{}"
+
+HOOK_EVENT="$(printf '%s' "$INPUT" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("hook_event_name",""))' 2>/dev/null || true)"
+
+python3 "$AEGF/.github/scripts/agent-log.py" hook "$HOOK_TYPE" <<<"$INPUT" 2>/dev/null || true
+
+case "$HOOK_EVENT" in
+  beforeReadFile|beforeTabFileRead)
+    echo '{"permission":"allow"}'
+    ;;
+  *)
+    echo "{}"
+    ;;
+esac

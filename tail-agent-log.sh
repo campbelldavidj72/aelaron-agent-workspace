@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Tail agent-log.jsonl with human-readable summaries.
 # Usage:
-#   ./tail-agent-log.sh              # new entries only
-#   ./tail-agent-log.sh --from-start # replay then follow
-#   ./tail-agent-log.sh --from-start --no-follow  # replay only
+#   ./tail-agent-log.sh              # last 20 entries, then follow new ones
+#   ./tail-agent-log.sh -n 0         # follow new entries only (no replay)
+#   ./tail-agent-log.sh --from-start # full replay then follow
+#   AGENT_LOG_TRACE=1 — also writes .cursor/governance/hook-trace.jsonl
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
